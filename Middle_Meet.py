@@ -5,7 +5,7 @@ import math
 
 app = Flask(__name__)
 
-google_maps_api_key = "AIzaSyDstmnU4nHl4xfeIYsaCbyDlLPkAmBk-F4"
+google_maps_api_key = ""
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
