@@ -5,7 +5,7 @@ import math
 
 app = Flask(__name__)
 
-google_maps_api_key = ""
+google_maps_api_key = "AIzaSyDstmnU4nHl4xfeIYsaCbyDlLPkAmBk-F4"
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
@@ -36,7 +36,7 @@ def get_coordinates(location):
     #define the parameters for the api request
     params = {
         'address': location,
-        'key': '',
+        'key': 'AIzaSyDstmnU4nHl4xfeIYsaCbyDlLPkAmBk-F4',
     }
 
     try:
@@ -76,7 +76,7 @@ def calculate_midpoint(lat1, lon1, lat2, lon2):
     lat3 = math.degrees(lat3)
     lon3 = math.degrees(lon3)
 
-    return lat3, lon2
+    return lat3, lon3
     pass
 
 def find_recommendations(lat, lon, interests):
@@ -86,13 +86,13 @@ def find_recommendations(lat, lon, interests):
     #define the parameters for the API request
     params = {
         'location': f"{lat}, {lon}", #coordinates in the format "latitude, longitude"
-        'radius': 1000, #search radius in meters 
+        'radius': 5000, #search radius in meters 
         'type': 'restaurant',
-        'key': ''
+        'key': 'AIzaSyDstmnU4nHl4xfeIYsaCbyDlLPkAmBk-F4'
     }
 
     #make API request
-    response = request.get(places_url, params= params)
+    response = requests.get(places_url, params= params)
     data = response.json()
 
     recommended_places = []
@@ -107,13 +107,15 @@ def find_recommendations(lat, lon, interests):
             place_address = place.get('vicinity', 'N/A')
             place_rating = place.get('rating', 'N/A')
 
-            # check if the place matches the user's interests (can implmement greater filtering)
-            if any(interests.lower() in place_name.lower() for interst in interests):
-                recommended_places.append({
-                    'name': place_name,
-                    'address': place_address,
-                    'rating': place_rating,
-                })
+            for interest in interests:
+                if interest.lower() in place_name.lower():
+                    recommended_places.append({
+                        'name': place_name,
+                        'address': place_address,
+                        'rating': place_rating,
+                    })
+                    break #to avoid adding the same place multiple times if matches many interests
+
 
     return recommended_places
     pass
@@ -121,12 +123,25 @@ def find_recommendations(lat, lon, interests):
 
 if __name__ == '__main__':
     #app.run(debug=True)
-    user_location = input("Enter a location: ")
+    user_location_1 = input("Enter first location: ")
+    user_location_2 = input("Enter second location: ")
     user_interests = input("Enter your interests (comma-separated): ").split(",")
 
-    latitude, longitude = get_coordinates(user_location)
+
+    latitude_1, longitude_1 = get_coordinates(user_location_1)
+    latitude_2, longitude_2 = get_coordinates(user_location_2)
+    latitude, longitude = calculate_midpoint(latitude_1, longitude_1, latitude_2, longitude_2)
+    print("Latitude, Longitude: ", latitude, ', ', longitude)
     if latitude is not None and longitude is not None:
-        coords = (latitude, longitude)
-        find_recommendations(coords, user_interests)
+        #coords = (latitude, longitude)
+        recommended_places = find_recommendations(latitude, longitude, user_interests)
+        if recommended_places:
+            for place in recommended_places:
+                print("Name:", place.get('name'))
+                print("Address:", place.get('address'))
+                print("Rating:", place.get('rating'))
+                print('-----------------')
+        else:
+            print("No recommendations found for the given location and interests.")
     else:
         print("Invalid location or unable to retrieve coordinates.")
