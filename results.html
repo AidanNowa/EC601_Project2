@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recommendations</title>
+    <!-- Add any CSS stylesheets or other meta tags as needed -->
+</head>
+<body>
+    <h1>Recommendations</h1>
+    
+    <h2>Recommended Places:</h2>
+    <ul>
+        {% for place in recommended_places %}
+            <li>
+                <strong>Name:</strong> {{ place.name }}<br>
+                <strong>Address:</strong> {{ place.address }}<br>
+                <strong>Rating:</strong> {{ place.rating }}<br>
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
