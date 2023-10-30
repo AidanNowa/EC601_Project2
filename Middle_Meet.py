@@ -5,7 +5,7 @@ import math
 
 app = Flask(__name__)
 
-google_maps_api_key = "AIzaSyDstmnU4nHl4xfeIYsaCbyDlLPkAmBk-F4"
+google_maps_api_key = ""
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
@@ -36,7 +36,7 @@ def get_coordinates(location):
     #define the parameters for the api request
     params = {
         'address': location,
-        'key': 'AIzaSyDstmnU4nHl4xfeIYsaCbyDlLPkAmBk-F4',
+        'key': '',
     }
 
     try:
@@ -88,7 +88,7 @@ def find_recommendations(lat, lon, interests):
         'location': f"{lat}, {lon}", #coordinates in the format "latitude, longitude"
         'radius': 5000, #search radius in meters 
         'type': 'restaurant',
-        'key': 'AIzaSyDstmnU4nHl4xfeIYsaCbyDlLPkAmBk-F4'
+        'key': ''
     }
 
     #make API request
