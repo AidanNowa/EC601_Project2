@@ -36,7 +36,7 @@ def get_coordinates(location):
     #define the parameters for the api request
     params = {
         'address': location,
-        'key': 'AIzaSyDstmnU4nHl4xfeIYsaCbyDlLPkAmBk-F4',
+        'key': '',
     }
 
     try:
@@ -88,7 +88,7 @@ def find_recommendations(lat, lon, interests):
         'location': f"{lat}, {lon}", #coordinates in the format "latitude, longitude"
         'radius': 1000, #search radius in meters 
         'type': 'restaurant',
-        'key': 'AIzaSyDstmnU4nHl4xfeIYsaCbyDlLPkAmBk-F4'
+        'key': ''
     }
 
     #make API request
