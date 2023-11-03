@@ -1,4 +1,4 @@
-# EC601_Project2
+# Middle Meet: An EC601 Project
 
 ### How To Run ###
 Download the repository and edit the file to add in your Google API Key. Run the Middle_Meet.py file. Through the terminal, you will be prompted with two locations. Inputs can be as general as cities/counties or as specific as individual addresses. Next, you will be asked to input your interests. Input these comma-separated like: "restaurant, bar, movie theater". Your recommendations will then be printed to the terminal.
